@@ -9,10 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-/**
- * Created by gobi on 5/9/2018.
- */
-
 @Entity(name = "projects")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,4 +30,7 @@ public class Project {
 
     @Column(name = "project_uuid")
     private String projectUuid;
+
+    @Column(name = "uuid_path")
+    private String pathUuid;
 }

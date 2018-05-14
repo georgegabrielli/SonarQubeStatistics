@@ -1,10 +1,7 @@
 package ro.ggabrielli.statistics.domain.elasticsearch;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -12,13 +9,11 @@ import org.springframework.data.elasticsearch.annotations.FieldIndex;
 
 import java.util.Date;
 
-/**
- * Created by gobi on 5/9/2018.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Document(indexName = "sonar_analytics", type = "module")
 public class ESModule {
     @Id
@@ -34,13 +29,13 @@ public class ESModule {
     private String linesOfCode;
 
     @Field
-    private int bugs;
+    private long bugs;
 
     @Field
-    private int vulnerabilities;
+    private long vulnerabilities;
 
     @Field
-    private int codeSmells;
+    private long codeSmells;
 
     @Field
     private String coverage;

@@ -10,10 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-/**
- * Created by gobi on 5/8/2018.
- */
-
 @Entity(name = "issues")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,4 +35,7 @@ public class Issue implements Serializable{
 
     @Column(name = "issue_type")
     private int issueType;
+
+    @Column(name = "status")
+    private String status;
 }
