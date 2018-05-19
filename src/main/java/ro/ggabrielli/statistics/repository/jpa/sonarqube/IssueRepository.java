@@ -8,7 +8,4 @@ import java.util.List;
 
 @Repository
 public interface IssueRepository extends JpaRepository<Issue, Integer> {
-
-    List<Issue> findByComponentUUID(String uuid);
-
 }
