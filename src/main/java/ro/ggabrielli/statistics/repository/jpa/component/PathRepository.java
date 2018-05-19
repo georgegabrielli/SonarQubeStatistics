@@ -1,7 +1,9 @@
 package ro.ggabrielli.statistics.repository.jpa.component;
 
-/**
- * Created by gobi on 5/19/2018.
- */
-public class PathRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import ro.ggabrielli.statistics.domain.component.Path;
+
+@Repository
+public interface PathRepository extends JpaRepository<Path, Integer> {
 }

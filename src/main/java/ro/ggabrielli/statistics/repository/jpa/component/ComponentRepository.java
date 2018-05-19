@@ -1,4 +1,4 @@
-package ro.ggabrielli.statistics.repository.jpa.componnent;
+package ro.ggabrielli.statistics.repository.jpa.component;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

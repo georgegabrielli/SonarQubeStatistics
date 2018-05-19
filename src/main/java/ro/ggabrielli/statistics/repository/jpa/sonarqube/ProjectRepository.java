@@ -1,4 +1,4 @@
-package ro.ggabrielli.statistics.repository.jpa;
+package ro.ggabrielli.statistics.repository.jpa.sonarqube;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

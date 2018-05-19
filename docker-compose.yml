@@ -1,6 +1,12 @@
 version: "2"
 
 services: 
+#  jenkins:
+#    image: 'jenkins/jenkins'
+#    container_name: 'jenkins'
+#    ports:
+#      - '8080:8080'
+
   sonarqube:
     image: sonarqube
     ports:
@@ -40,3 +46,5 @@ volumes:
   sonarqube_bundled-plugins:
   postgresql:
   postgresql_data:
+  jenkins_data:
+    driver: local
