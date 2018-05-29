@@ -9,6 +9,8 @@ import lombok.*;
 @Builder
 public class PathDto {
 
+    private Integer id;
+
     public String value;
 
 }

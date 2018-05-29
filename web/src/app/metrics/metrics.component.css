@@ -1,0 +1,10 @@
+.metrics{
+  padding-top: 1em;
+  height: 100%;
+  width: 100%;
+}
+
+iframe{
+    height: 54em;
+    width: 100%;
+  }

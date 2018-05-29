@@ -1,12 +1,14 @@
 version: "2"
 
 services: 
-#  jenkins:
-#    image: 'jenkins/jenkins'
-#    container_name: 'jenkins'
-#    ports:
-#      - '8080:8080'
-
+  jenkins:
+    image: 'bitnami/jenkins:latest'
+    ports:
+      - '8080:8080'
+      - '443:8433'
+    volumes:
+      - 'jenkins_data:/bitnami'
+      
   sonarqube:
     image: sonarqube
     ports:
@@ -34,6 +36,25 @@ services:
       - postgresql:/var/lib/postgresql
       # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
       - postgresql_data:/var/lib/postgresql/data
+      
+  elasticsearch:
+    image: elasticsearch:2.4.6
+    environment:
+      - cluster_name=sonar-statistics
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - sonarnet
+      
+  kibana:
+    image: kibana:4.6.6
+    ports:
+      - 5601:5601
+    networks: 
+      - sonarnet
+    depends_on:
+      - elasticsearch
 
 networks:
   sonarnet:
@@ -47,4 +68,6 @@ volumes:
   postgresql:
   postgresql_data:
   jenkins_data:
+    driver: local
+  esdata1:
     driver: local

@@ -1,0 +1,10 @@
+<app-path-list></app-path-list>
+
+<div class="addPath">
+  <input #pathName  required="required" (input)="onChange($event.target.value)"/>
+  <button [disabled]="!textFilled" (click)="addPath(pathName.value)">ADD</button>
+</div>
+
+
+
+

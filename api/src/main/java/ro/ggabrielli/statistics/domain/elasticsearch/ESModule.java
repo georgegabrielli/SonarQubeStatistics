@@ -29,6 +29,18 @@ public class ESModule {
     private String linesOfCode;
 
     @Field
+    private long majorIssues;
+
+    @Field
+    private long minorIssues;
+
+    @Field
+    private long blockers;
+
+    @Field
+    private long info;
+
+    @Field
     private long bugs;
 
     @Field

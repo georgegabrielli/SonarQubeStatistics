@@ -1,0 +1,10 @@
+
+<h2>paths</h2>
+<ul class="groups">
+  <li *ngFor="let path of paths"
+      [class.selected]="path === selectedPath">
+    {{path.value}}
+    <button class="delete"
+            (click)="delete(path); $event.stopPropagation()">x</button>
+  </li>
+</ul>

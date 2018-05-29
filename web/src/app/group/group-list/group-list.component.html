@@ -1,0 +1,11 @@
+
+<h2>groups</h2>
+<ul class="groups">
+  <li *ngFor="let group of groups "
+      [class.selected]="group === selectedGroup"
+      (click)="onSelect(group)">
+    {{group.name}}
+    <button class="delete"
+            (click)="delete(group); $event.stopPropagation()">x</button>
+  </li>
+</ul>

@@ -5,6 +5,7 @@ import ro.ggabrielli.statistics.domain.component.Path;
 import ro.ggabrielli.statistics.dto.PathDto;
 import ro.ggabrielli.statistics.dto.PathsDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +18,10 @@ public class PathConverter {
     }
 
     public PathDto convertToDto(Path path) {
-        return PathDto.builder().value(path.getValue()).build();
+        return PathDto.builder().id(path.getId()).value(path.getValue()).build();
     }
 
-    public List<Path> convertListToModel(PathsDto paths) {
-        return paths.getPaths().stream().map(pathDto -> Path.builder().value(pathDto.getValue()).build()).collect(Collectors.toList());
+    public List<Path> convertListToModel(List<PathDto> pathsDto) {
+        return pathsDto == null ? new ArrayList<>() : pathsDto.stream().map(pathDto -> Path.builder().id(pathDto.getId()).value(pathDto.getValue()).build()).collect(Collectors.toList());
     }
 }

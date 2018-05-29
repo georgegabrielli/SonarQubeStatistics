@@ -1,5 +1,6 @@
 package ro.ggabrielli.statistics.processor;
 
+import jdk.nashorn.internal.ir.Block;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.util.CollectionUtils;
 import ro.ggabrielli.statistics.domain.component.Group;
 import ro.ggabrielli.statistics.domain.component.Path;
 import ro.ggabrielli.statistics.domain.elasticsearch.ESModule;
+import ro.ggabrielli.statistics.domain.enumerated.IssueSeverity;
 import ro.ggabrielli.statistics.domain.enumerated.IssueStatus;
 import ro.ggabrielli.statistics.domain.enumerated.IssueType;
 import ro.ggabrielli.statistics.domain.enumerated.ProjectScope;
@@ -68,6 +70,10 @@ public class SonarDataProcessor {
                 long codeSmells = 0;
                 long vulnerabilities = 0;
                 long bugs = 0;
+                long majorIssues = 0;
+                long blockers = 0;
+                long minorIssues = 0;
+                long info = 0;
                 for (String f : directoryFiles) {
                     List<Issue> fileIssues = issues.stream()
                                                    .filter(issue -> f.equals(issue.getComponentUUID())
@@ -77,6 +83,11 @@ public class SonarDataProcessor {
                     codeSmells += countIssues(fileIssues, IssueType.CODE_SMELL);
                     vulnerabilities += countIssues(fileIssues, IssueType.VULNERABILITY);
                     bugs += countIssues(fileIssues, IssueType.BUG);
+
+                    majorIssues += countSeverities(fileIssues, IssueSeverity.MAJOR);
+                    blockers += countSeverities(fileIssues, IssueSeverity.BLOCKER);
+                    minorIssues += countSeverities(fileIssues, IssueSeverity.MINOR);
+                    info += countSeverities(fileIssues, IssueSeverity.INFO);
                 }
 
                 ESModule module = ESModule.builder()
@@ -84,12 +95,20 @@ public class SonarDataProcessor {
                                           .bugs(bugs)
                                           .codeSmells(codeSmells)
                                           .vulnerabilities(vulnerabilities)
+                                          .majorIssues(majorIssues)
+                                          .blockers(blockers)
+                                          .minorIssues(minorIssues)
+                                           .info(info)
                                           .fileDate(new Date())
                                           .build();
 
                 esModuleRepository.save(module);
             }
         }
+    }
+
+    private long countSeverities (List<Issue> fileIssues, IssueSeverity severity) {
+        return fileIssues.stream().filter(issue -> severity.getSeverity().equals(issue.getSeverity())).count();
     }
 
     private void checkForSameDayAnalysis () {

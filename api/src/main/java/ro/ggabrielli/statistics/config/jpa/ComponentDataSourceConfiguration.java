@@ -1,4 +1,4 @@
-package ro.ggabrielli.statistics.config;
+package ro.ggabrielli.statistics.config.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,24 +19,23 @@ import java.util.HashMap;
 
 @Configuration
 @PropertySource({"classpath:application.properties"})
-@EnableJpaRepositories(basePackages = {"ro.ggabrielli.statistics.repository.jpa.sonarqube"},
-        entityManagerFactoryRef = "sonarQubeEntityManager",
-        transactionManagerRef = "sonarQubeTransactionManager")
-public class SonarQubeDataSourceConfiguration {
+@EnableJpaRepositories(basePackages = {"ro.ggabrielli.statistics.repository.jpa.component"},
+        entityManagerFactoryRef = "componentEntityManager",
+        transactionManagerRef = "componentTransactionManager")
+public class ComponentDataSourceConfiguration {
 
     private final Environment environment;
 
-    public SonarQubeDataSourceConfiguration (@Autowired Environment environment) {
+    public ComponentDataSourceConfiguration (@Autowired Environment environment) {
         this.environment = environment;
     }
 
-    @Primary
     @Bean
-    public LocalContainerEntityManagerFactoryBean sonarQubeEntityManager () {
+    public LocalContainerEntityManagerFactoryBean componentEntityManager () {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(sonarQubeDataSource());
-        em.setPackagesToScan("ro.ggabrielli.statistics.domain.sonarqube");
+        em.setDataSource(componentDataSource());
+        em.setPackagesToScan("ro.ggabrielli.statistics.domain.component");
 
         HibernateJpaVendorAdapter vendorAdapter
                 = new HibernateJpaVendorAdapter();
@@ -47,28 +46,26 @@ public class SonarQubeDataSourceConfiguration {
         properties.put("hibernate.dialect",
                        environment.getProperty("hibernate.dialect"));
         em.setJpaPropertyMap(properties);
-
         return em;
     }
 
-    @Primary
     @Bean
-    public DataSource sonarQubeDataSource () {
+    public DataSource componentDataSource () {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getProperty("sonar.jdbc.url"));
+        dataSource.setUrl(environment.getProperty("component.jdbc.url"));
         dataSource.setUsername(environment.getProperty("jdbc.username"));
         dataSource.setPassword(environment.getProperty("jdbc.password"));
 
         return dataSource;
     }
 
-    @Primary
     @Bean
-    public PlatformTransactionManager sonarQubeTransactionManager () {
+    public PlatformTransactionManager componentTransactionManager () {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(sonarQubeEntityManager().getObject());
+        transactionManager.setEntityManagerFactory(componentEntityManager().getObject());
         return transactionManager;
     }
+
 }

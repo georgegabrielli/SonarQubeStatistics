@@ -1,0 +1,10 @@
+<app-group-list></app-group-list>
+
+<div class="addGroup">
+    <input #groupName  required="required" (input)="onChange($event.target.value)"/>
+  <button [disabled]="!textFilled" (click)="addGroup(groupName.value)">ADD</button>
+</div>
+
+
+
+
